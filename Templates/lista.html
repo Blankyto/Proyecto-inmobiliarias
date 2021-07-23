@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<!-- Page Content -->
+    <div id="page-content">
+        <!-- Breadcrumb -->
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li class="active">Property Listing</li>
+            </ol>
+        </div>
+        <!-- end Breadcrumb -->
+
+        <div class="container">
+            <div class="row">
+                <!-- Results -->
+                <div class="col-md-9 col-sm-9">
+                    <section id="results">
+                        <header><h1>Listado de Propiedades</h1></header>
+                        <section id="search-filter">
+                            <figure><h3><i class="fa fa-search"></i>Resultado de la Busqueda:</h3>
+                                <span class="search-count">{{rows}}</span>
+                                <div class="sorting">
+                                    <div class="form-group">
+                                        <select name="sorting">
+                                            <option value="">Ordenar Por:</option>
+                                            <option value="1">Menor Precio</option>
+                                            <option value="2">Mayor Precio</option>
+                                            <option value="3">Fecha Agregada</option>
+                                        </select>
+                                    </div><!-- /.form-group -->
+                                </div>
+                            </figure>
+                        </section>
+
+                        <section id="properties">
+                        <div class="grid">
+                            {% for i in lista %}
+                        <div class="property masonry">
+                            <div class="inner">
+                                <a href="/Casa/{{i.id}}">
+                                    <div class="property-image">
+                                        <figure class="tag status">{{ i.Estado }}</figure>
+                                        <figure class="type" title="Apartment"><img src="assets/img/property-types/villa.png"  alt=""></figure>
+                                        <div class="overlay">
+                                            <div class="info">
+                                                <div class="tag price">€{{ i.Precio }} </div>
+                                            </div>
+                                        </div>
+                                        <img alt="" src="assets/img/properties/costa-adeje.jpg">
+                                    </div>
+                                </a>
+                                <aside>
+                                    <header>
+                                        <a href="/Casa/{{i.id}}"><h3>{{ i.Casa }}</h3></a>
+                                        <figure>{{ i.Ubicacion }}</figure>
+                                    </header>
+                                    <p>{{ i.DescipcionR }}</p>
+                                    <dl>
+                                        <dt>Estado:</dt>
+                                        <dd>{{ i.Estado }}</dd>
+                                        <dt>Area:</dt>
+                                        <dd>{{ i.Area }} m<sup>2</sup></dd>
+                                        <dt>Dormitorios:</dt>
+                                        <dd>{{ i.Dormitorios }}</dd>
+                                        <dt>Baños:</dt>
+                                        <dd>{{ i.Banios }}</dd>
+                                    </dl>
+                                    <a href="/Casa/{{i.id}}" class="link-arrow">Mas Informacion</a>
+                                </aside>
+                            </div>
+                        </div><!-- /.property -->
+
+ {% endfor %}
+                        </div><!-- /js-masonry-->
+
+                        </section><!-- /#properties-->
+                    </section><!-- /#results -->
+                </div><!-- /.col-md-9 -->
+                <!-- end Results -->
+
+                <!-- sidebar -->
+                <div class="col-md-3 col-sm-3">
+                    <section id="sidebar">
+                        <aside id="edit-search">
+                            <header><h3>Busqueda de propiedades</h3></header>
+                            <form role="form" id="form-sidebar" class="form-search" action="/lista" method="POST">
+                                <div class="form-group">
+                                    <select name="estado">
+                                        <option value="">Estado</option>
+                                        {% for i in est %}
+                                        <option value="{{i}}">{{i}}</option>
+
+                                        {% endfor %}
+                                    </select>
+                                </div><!-- /.form-group -->
+                                <div class="form-group">
+                                    <select name="ubicacion">
+
+                                        <option value="">Ubicacion</option>
+                                        {% for i in ub %}
+                                        <option value="{{i}}">{{i}}</option>
+
+                                        {% endfor %}
+                                    </select>
+                                </div><!-- /.form-group -->
+
+
+                                <div class="form-group">
+                                    <select name="tipo">
+
+                                        <option value="">Tipo de propiedad</option>
+                                        {% for r in tf %}
+
+                                        <option value="{{r}}">{{r}}</option>
+
+                                        {% endfor %}
+                                    </select>
+                                </div><!-- /.form-group -->
+                                     <div class="form-group">
+                                    <select name="dormitorio">
+
+                                        <option value="">Cantidad de dormitorios</option>
+                                        {% for r in dor %}
+                                        <option value="{{r}}">{{r}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div><!-- /.form-group -->
+                                                                <div class="form-group">
+                                    <select name="banio">
+
+                                        <option value="">Cantidad de Baños</option>
+                                        {% for i in ban %}
+                                        <option value="{{i}}">{{i}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div><!-- /.form-group -->
+                                <div class="form-group">
+                                    <div class="price-range">
+                                        <input id="price-input" type="text" name="price" value="1000;299000">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-default">Search Now</button>
+                                </div><!-- /.form-group -->
+                            </form><!-- /#form-map -->
+                        </aside><!-- /#edit-search -->
+                        <aside id="featured-properties">
+                            <header><h3>Featured Properties</h3></header>
+                            <div class="property small">
+                                {% for i in lista %}
+                                <a href="/Casa/{{i.id}}">
+                                    {% endfor %}
+                                    <div class="property-image">
+                                        <img alt="" src="assets/img/properties/property-06.jpg">
+                                    </div>
+                                </a>
+                                <div class="info">
+                                    <a href="property-detail.html"><h4>2186 Rinehart Road</h4></a>
+                                    <figure>Doral, FL 33178 </figure>
+                                    <div class="tag price">$ 72,000</div>
+                                </div>
+                            </div><!-- /.property -->
+                            <div class="property small">
+                                <a href="property-detail.html">
+                                    <div class="property-image">
+                                        <img alt="" src="assets/img/properties/property-09.jpg">
+                                    </div>
+                                </a>
+                                <div class="info">
+                                    <a href="property-detail.html"><h4>2479 Murphy Court</h4></a>
+                                    <figure>Minneapolis, MN 55402</figure>
+                                    <div class="tag price">$ 36,000</div>
+                                </div>
+                            </div><!-- /.property -->
+                            <div class="property small">
+                                <a href="property-detail.html">
+                                    <div class="property-image">
+                                        <img alt="" src="assets/img/properties/property-03.jpg">
+                                    </div>
+                                </a>
+                                <div class="info">
+                                    <a href="property-detail.html"><h4>1949 Tennessee Avenue</h4></a>
+                                    <figure>Minneapolis, MN 55402</figure>
+                                    <div class="tag price">$ 128,600</div>
+                                </div>
+                            </div><!-- /.property -->
+                        </aside><!-- /#featured-properties -->
+                        <aside id="our-guides">
+                            <header><h3>Our Guides</h3></header>
+                            <a href="#" class="universal-button">
+                                <figure class="fa fa-home"></figure>
+                                <span>Buying Guide</span>
+                                <span class="arrow fa fa-angle-right"></span>
+                            </a><!-- /.universal-button -->
+                            <a href="#" class="universal-button">
+                                <figure class="fa fa-umbrella"></figure>
+                                <span>Right Insurance for You</span>
+                                <span class="arrow fa fa-angle-right"></span>
+                            </a><!-- /.universal-button -->
+                        </aside><!-- /#our-guide -->
+                    </section><!-- /#sidebar -->
+                </div><!-- /.col-md-3 -->
+                <!-- end Sidebar -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </div>
+    <!-- end Page Content -->
+      {% endblock %}

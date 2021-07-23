@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+
+    <!-- Page Content -->
+    <div id="page-content">
+        <!-- Breadcrumb -->
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li class="active">Agregar Propiedades</li>
+            </ol>
+        </div>
+        <!-- end Breadcrumb -->
+
+        <div class="container">
+            <header><h1>Agregar Propiedades</h1></header>
+            <div class="row">
+                <!-- Submit-->
+
+
+
+            </div><!-- /.row -->
+            <form role="form" id="form-submit" class="form-submit" action="/cargar" enctype="multipart/form-data" method="post">
+                <div class="row">
+                    <div class="block">
+                        <div class="col-md-9 col-sm-9">
+                            <section id="submit-form">
+                                <section id="basic-information">
+                                    <header><h2>Informacion Basica</h2></header>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label for="submit-title">Titulo</label>
+                                                <input type="text" class="form-control" id="submit-title" name="title" required>
+                                            </div><!-- /.form-group -->
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="submit-price">Precio</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">€</span>
+                                                    <input type="text" class="form-control" id="submit-price" name="price" pattern="\d*" required>
+                                                </div>
+                                            </div><!-- /.form-group -->
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="submit-description">Descipcion Resumida</label>
+                                        <textarea class="form-control" id="submit-description" rows="3" name="description" required></textarea>
+                                    </div><!-- /.form-group -->
+                                </section><!-- /#basic-information -->
+                                <div class="form-group">
+                                        <label for="submit-description2">Descipcion Completa</label>
+                                        <textarea class="form-control" id="submit-description2" rows="8" name="description2" required></textarea>
+                                    </div><!-- /.form-group -->
+                                </section>
+                                <section>
+                                    <div class="row">
+                                        <div class="block clearfix">
+                                            <div class="col-md-6 col-sm-6">
+                                                <section id="summary">
+                                                    <header><h2>CARGAR PROPIEDAD</h2></header>
+                                                    <div class="form-group">
+                                                        <label for="submit-location">Ubicacion</label>
+
+                                                        <input type="text" class="form-control" id="submit-location" name="ubi" required>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="submit-property-type">Tipo de propiedad</label>
+
+                                                                <input type="text" class="form-control" id="submit-property-type" name="tipo" required>
+
+                                                            </div><!-- /.form-group -->
+                                                        </div><!-- /.col-md-6 -->
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="submit-status">Estado</label>
+                                                                <select name="type" id="submit-status">
+                                                                    <option value="En Venta">En Venta</option>
+                                                                    <option value="Alquiler">Alquiler</option>
+                                                                </select>
+                                                            </div><!-- /.form-group -->
+                                                        </div><!-- /.col-md-6 -->
+                                                    </div><!-- /.row -->
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="submit-Beds">Dormitorios</label>
+                                                                <input type="text" class="form-control" id="submit-Beds" name="dorm" pattern="\d*" required>
+                                                            </div><!-- /.form-group -->
+                                                        </div><!-- /.col-md-6 -->
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="submit-Baths">Baños</label>
+                                                                <input type="text" class="form-control" id="submit-Baths" name="banios" pattern="\d*" required>
+                                                            </div><!-- /.form-group -->
+                                                        </div><!-- /.col-md-6 -->
+                                                    </div><!-- /.row -->
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="submit-area">Area</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" id="submit-area" name="area" pattern="\d*" required>
+                                                                    <span class="input-group-addon">m<sup>2</sup></span>
+                                                                </div>
+                                                            </div><!-- /.form-group -->
+                                                        </div><!-- /.col-md-6 -->
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="submit-garages">Garages</label>
+                                                                <input type="text" class="form-control" id="submit-garages" name="garages" pattern="\d*" required>
+                                                            </div><!-- /.form-group -->
+                                                        </div><!-- /.col-md-6 -->
+                                                    </div><!-- /.row -->
+
+                                                </section><!-- /#summary -->
+                                            </div><!-- /.col-md-6 -->
+
+                                        </div><!-- /.block -->
+                                    </div><!-- /.row -->
+                                </section>
+
+                                <section class="block" id="gallery">
+                                    <header><h2>Gallery</h2></header>
+                                    <div class="center">
+                                        <div class="form-group">
+                                            <input type="file" name="files[]" id="fileInput" class="form-control" multiple >
+                                            <figure class="note"><strong>Hint:</strong> Subir solo la imagen Primaria</figure>
+                                        </div>
+                                    </div>
+                                </section>
+
+
+
+                            </section>
+                        </div><!-- /.col-md-9 -->
+                        <div class="col-md-3 col-sm-3">
+                            <aside class="submit-step">
+                                <figure class="step-number">2</figure>
+                                <div class="description">
+                                    <h4>Informacion de la propiedad</h4>
+                                    <p>Type information about your property. Be descriptive.
+                                    </p>
+                                </div>
+                            </aside><!-- /.submit-step -->
+                        </div><!-- /.col-md-3 -->
+                    </div>
+                </div><!-- /.row -->
+                <div class="row">
+                    <div class="block">
+                        <div class="col-md-9 col-sm-9">
+                            <div class="center">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-default large">Cargar la Propiedad</button>
+                                </div><!-- /.form-group -->
+                                <figure class="note block"> <a href="terms-conditions.html">Terms and conditions</a></figure>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-3">
+                            <aside class="submit-step">
+                                <figure class="step-number">3</figure>
+                                <div class="description">
+                                    <h4>Revise la informacion antes de cargar.</h4>
+                                    <p>Revise cuidadosamente toda la informacion que esta por cargar.
+                                    </p>
+                                </div>
+                            </aside><!-- /.submit-step -->
+                        </div><!-- /.col-md-3 -->
+                    </div>
+                </div>
+            </form><!-- /#form-submit -->
+        </div><!-- /.container -->
+    </div>
+       </div>
+    <!-- end Page Content -->
+ {% endblock %}
