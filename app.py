@@ -14,7 +14,7 @@ app = Flask(__name__,
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///databases/realstate.db"
 db = SQLAlchemy(app)
 session = db.session
-UPLOAD_FOLDER = 'Templates/assets/img/properties'
+UPLOAD_FOLDER = 'templates/assets/img/properties'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
