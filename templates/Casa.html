@@ -78,14 +78,10 @@
                                 <section id="property-features">
                                     <header><h2>Caracteristicas</h2></header>
                                     <ul class="list-unstyled property-features-list">
-                                        <li>Aire acondicionado</li>
-                                        <li>Cocina Equipada</li>
-                                        <li>garaje</li>
-                                        <li>Gimnasio</li>
-                                        <li>Jardin Luminoso</li>
-                                        <li>Vista al Mar</li>
-                                        <li>Piscina</li>
-                                        <li>Vistas al Monte</li>
+                                        {% for i in carac %}
+                                        <li>{{i.Caracteristicas}}</li>
+                                        {% endfor %}
+
                                     </ul>
                                 </section><!-- /#property-features -->
                                 

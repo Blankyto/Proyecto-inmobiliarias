@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+
+<div class="container">
+<h2>Casas</h2>
+    <div class="row">
+        <table width="100%">
+            <tr><th style="text-align:center">ID</th><th style="text-align:center">Nombre</th><th style="text-align:center">Precio</th><th>Borrar</th></tr>
+        {% for i in casa.items %}
+     <div class="form-group">
+
+  <tr>   <td align="center">{{ i.id }}</td> <td align="center">{{ i.Casa }}</td> <td align="center">{{ i.Precio }}</td>  <td>  <a href="/eliminar/{{i.id}}">Borrar</a></td></tr>
+
+
+    </div>     {% endfor %}</table>
+        <div class="col-lg-12">
+            <!-- Pagination Links-->
+<div class="text-right" >
+    <a href="{{ url_for('modificar', page=casa.prev_num) }}"
+       class="btn btn-outline-dark
+       {% if casa.page == 1 %}disabled{% endif %}">
+        &laquo;
+    </a>
+<!-- Loop through the number of pages to display a link for each-->
+    {% for page_num in casa.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+{% if page_num %}
+<!-- Check for the active page and set the link to "Active"-->
+            {% if casa.page == page_num %}
+            <a href="{{ url_for('modificar', page=page_num) }}"
+               class="btn btn-dark">
+                {{ page_num }}
+            </a>
+            {% else %}
+            <a href="{{ url_for('modificar', page=page_num) }}"
+               class="btn btn-outline-dark">
+                {{ page_num }}
+            </a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+    <a href="{{ url_for('modificar', page=casa.next_num) }}"
+       class="btn btn-outline-dark
+       {% if casa.page == casa.pages %}disabled{% endif %}">
+        &raquo;
+    </a>
+</div>
+  <div>
+<p class="text-right mt-3">
+   Showing page {{ casa.page }} of {{ casa.pages }}
+</p>
+  </div>
+  </div>
+ </div>
+</div>
+
+
+
+
+{% endblock %}

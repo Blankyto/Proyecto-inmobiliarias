@@ -36,19 +36,19 @@
 
                         <section id="properties">
                         <div class="grid">
-                            {% for i in lista %}
+                            {% for i in lista.items %}
                         <div class="property masonry">
                             <div class="inner">
                                 <a href="/Casa/{{i.id}}">
                                     <div class="property-image">
                                         <figure class="tag status">{{ i.Estado }}</figure>
-                                        <figure class="type" title="Apartment"><img src="assets/img/property-types/villa.png"  alt=""></figure>
+                                        <figure class="type" title="{{i.Tipo}}"><img src="assets/img/property-types/{{i.Tipo}}.png"  alt=""></figure>
                                         <div class="overlay">
                                             <div class="info">
                                                 <div class="tag price">€{{ i.Precio }} </div>
                                             </div>
                                         </div>
-                                        <img alt="" src="assets/img/properties/costa-adeje.jpg">
+                                        <img alt="" src="assets/img/properties/{{i.Imagen}}">
                                     </div>
                                 </a>
                                 <aside>
@@ -56,14 +56,14 @@
                                         <a href="/Casa/{{i.id}}"><h3>{{ i.Casa }}</h3></a>
                                         <figure>{{ i.Ubicacion }}</figure>
                                     </header>
-                                    <p>{{ i.DescipcionR }}</p>
+                                    <p>{{ i.DescripcionR }}</p>
                                     <dl>
                                         <dt>Estado:</dt>
                                         <dd>{{ i.Estado }}</dd>
                                         <dt>Area:</dt>
                                         <dd>{{ i.Area }} m<sup>2</sup></dd>
                                         <dt>Dormitorios:</dt>
-                                        <dd>{{ i.Dormitorios }}</dd>
+                                        <dd>{{ i.Dormitorio }}</dd>
                                         <dt>Baños:</dt>
                                         <dd>{{ i.Banios }}</dd>
                                     </dl>
@@ -74,7 +74,41 @@
 
  {% endfor %}
                         </div><!-- /js-masonry-->
-
+<!-- Pagination Links-->
+<div class="text-right" >
+    <a href="{{ url_for('lista', page=lista.prev_num) }}"
+       class="btn btn-outline-dark
+       {% if lista.page == 1 %}disabled{% endif %}">
+        &laquo;
+    </a>
+<!-- Loop through the number of pages to display a link for each-->
+    {% for page_num in lista.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+{% if page_num %}
+<!-- Check for the active page and set the link to "Active"-->
+            {% if lista.page == page_num %}
+            <a href="{{ url_for('lista', page=page_num) }}"
+               class="btn btn-dark">
+                {{ page_num }}
+            </a>
+            {% else %}
+            <a href="{{ url_for('lista', page=page_num) }}"
+               class="btn btn-outline-dark">
+                {{ page_num }}
+            </a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+    <a href="{{ url_for('lista', page=lista.next_num) }}"
+       class="btn btn-outline-dark
+       {% if lista.page == lista.pages %}disabled{% endif %}">
+        &raquo;
+    </a>
+</div>
+<p class="text-right mt-3">
+   Showing page {{ lista.page }} of {{ lista.pages }}
+</p>
                         </section><!-- /#properties-->
                     </section><!-- /#results -->
                 </div><!-- /.col-md-9 -->
@@ -149,7 +183,7 @@
                         <aside id="featured-properties">
                             <header><h3>Featured Properties</h3></header>
                             <div class="property small">
-                                {% for i in lista %}
+                                {% for i in lista2 %}
                                 <a href="/Casa/{{i.id}}">
                                     {% endfor %}
                                     <div class="property-image">

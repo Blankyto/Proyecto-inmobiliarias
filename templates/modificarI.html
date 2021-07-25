@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+
+<div class="container">
+<h2>Fotos</h2>
+    <div class="row">
+        <table width="100%">
+            <tr><th style="text-align:center">ID de la casa</th><th style="text-align:center">Nombre de la casa</th><th style="text-align:center">Caracteristica</th><th>Borrar</th></tr>
+        {% for i in fotos.items %}
+     <div class="form-group">
+
+  <tr>   <td align="center">{{ i.casa }}</td> <td align="center">{% for r in casa %}{% if i.casa == r.id %}{{r.Casa}}{% endif %} {% endfor %}</td> <td align="center"><img width="150" height="150" alt="" src="/assets/img/properties/{{ i.archivo }}"></td>  <td>  <a href="/eliminarI/{{i.id}}">Borrar</a></td></tr>
+
+
+    </div>     {% endfor %}</table>
+        <div class="col-lg-12">
+            <!-- Pagination Links-->
+<div class="text-right" >
+    <a href="{{ url_for('modificarI', page=fotos.prev_num) }}"
+       class="btn btn-outline-dark
+       {% if fotos.page == 1 %}disabled{% endif %}">
+        &laquo;
+    </a>
+<!-- Loop through the number of pages to display a link for each-->
+    {% for page_num in fotos.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+{% if page_num %}
+<!-- Check for the active page and set the link to "Active"-->
+            {% if fotos.page == page_num %}
+            <a href="{{ url_for('modificarI', page=page_num) }}"
+               class="btn btn-dark">
+                {{ page_num }}
+            </a>
+            {% else %}
+            <a href="{{ url_for('modificarI', page=page_num) }}"
+               class="btn btn-outline-dark">
+                {{ page_num }}
+            </a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+    <a href="{{ url_for('modificarI', page=fotos.next_num) }}"
+       class="btn btn-outline-dark
+       {% if fotos.page == fotos.pages %}disabled{% endif %}">
+        &raquo;
+    </a>
+</div>
+  <div>
+
+
+<p class="text-right mt-3">
+   Showing page {{ fotos.page }} of {{ fotos.pages }}
+</p>
+  </div>
+  </div>
+ </div>
+</div>
+
+
+
+
+{% endblock %}

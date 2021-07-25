@@ -1,25 +1,45 @@
-<section id="property-features" name="caract[]" class="block">
-                                    <section>
-                                        <header><h2>Caracteristicas de la Casa</h2></header>
-                                        <ul class="submit-features">
-                                            <li><div class="checkbox"><label><input type="checkbox">Air conditioning</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Bedding</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Heating</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Internet</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Microwave</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Smoking allowed</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Use of pool</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Toaster</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Coffee pot</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Cable TV</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Parquet</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Roof terrace</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Terrace</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Balcony</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Iron</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Hi-Fi</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Beach</label></div></li>
-                                            <li><div class="checkbox"><label><input type="checkbox">Garage</label></div></li>
-                                        </ul>
-                                    </section>
-                                </section>
+{% extends 'base.html' %}
+
+{% block main %}
+
+
+<div class="container">
+<h2>CARGAR CARACTERISTICAS DELAS CASA</h2>
+    <div class="row">
+        <div class="col-lg-12">
+            <p>
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                 {% for message in messages %}
+                   <div class="alert alert-success">
+                    <strong>{{ message }}</strong>
+                  </div>
+                 {% endfor %}
+                  {% endif %}
+                {% endwith %}
+               </p>
+  <div>
+   <!-- File upload form -->
+   <form method="post" action="/caracteristicas" enctype="multipart/form-data" class="form-inline">
+    <div class="form-group">
+                      <label>Escriba las caracteristicas: </label>
+                      <textarea class="form-control" id="submit-description" rows="4" name="carac" required></textarea>
+                                        <div class="form-group">
+                                    <select name="estado">
+                                        <option value="">Casa</option>
+                                        {% for i in casa %}
+                                        <option value="{{i.id}}">{{i.id}}</option>
+
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                 </div>
+                 <input type="submit" name="submit" class="btn btn-success" value="UPLOAD"/>
+             </form>
+  </div>
+  </div>
+ </div>
+</div>
+
+{% endblock %}
