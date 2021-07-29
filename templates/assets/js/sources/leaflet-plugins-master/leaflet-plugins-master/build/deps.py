@@ -22,5 +22,5 @@ while work:
         work = i + [f] + work
         continue
     printed.add(f)
-    print(f)
+    print f
 

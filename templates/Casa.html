@@ -102,18 +102,23 @@
                                     </div>
                                     <div class="rating-form">
                                         <header>Thank you! Please describe your rating</header>
-                                        <form role="form" id="form-rating" method="post"  class="clearfix">
+                                        <form role="form" id="form-rating"  method="post"  class="clearfix">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="form-rating-name">Nombre<em>*</em></label>
-                                                        <input type="text" class="form-control" id="form-rating-name" name="form-rating-name" required>
+                                                        <input type="text" class="form-control" id="form-rating-name" name="name" required>
+                                                    </div><!-- /.form-group -->
+                                                </div><!-- /.col-md-6 -->
+                                                <div class="form-group">
+                                                        <label for="form-rating-name2">Telefono<em>*</em></label>
+                                                        <input type="text" class="form-control" id="form-rating-name2" name="Telefono" required>
                                                     </div><!-- /.form-group -->
                                                 </div><!-- /.col-md-6 -->
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="form-rating-email">Email<em>*</em></label>
-                                                        <input type="email" class="form-control" id="form-rating-email" name="form-rating-email" required>
+                                                        <input type="email" class="form-control" id="form-rating-email" name="email" required>
                                                     </div><!-- /.form-group -->
                                                 </div><!-- /.col-md-6 -->
                                             </div><!-- /.row -->
@@ -121,12 +126,12 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="form-rating-message">Mensaje<em>*</em></label>
-                                                        <textarea class="form-control" id="form-rating-message" rows="6" name="form-rating-message" required></textarea>
+                                                        <textarea class="form-control" id="form-rating-message" rows="6" required></textarea>
                                                     </div><!-- /.form-group -->
                                                 </div><!-- /.col-md-12 -->
                                             </div><!-- /.row -->
                                             <div class="form-group">
-                                                <button type="submit" class="btn pull-right btn-default" id="form-rating-submit">Send a Message</button>
+                                                <button type="submit" class="btn pull-right btn-default" id="form-rating-submit">Enviar Mensaje</button>
                                             </div><!-- /.form-group -->
                                             <div id="form-rating-status"></div>
                                         </form><!-- /#form-contact -->
@@ -166,21 +171,26 @@
                                             </div><!-- /.col-md-7 -->
                                             <div class="col-md-5 col-sm-12">
                                                 <div class="agent-form">
-                                                    <form role="form" id="form-contact-agent" method="post"  class="clearfix">
+                                                    <form role="form" id="form-contact-agent" method="post"   class="clearfix">
                                                         <div class="form-group">
-                                                            <label for="form-contact-agent-name">Your Name<em>*</em></label>
-                                                            <input type="text" class="form-control" id="form-contact-agent-name" name="form-contact-agent-name" required>
+                                                            <label for="form-contact-agent-name">Nombre<em>*</em></label>
+                                                            <input type="text" class="form-control" id="form-contact-agent-name"  name="nombre"  required>
                                                         </div><!-- /.form-group -->
                                                         <div class="form-group">
-                                                            <label for="form-contact-agent-email">Your Email<em>*</em></label>
-                                                            <input type="email" class="form-control" id="form-contact-agent-email" name="form-contact-agent-email" required>
+                                                            <label for="form-contact-agent-email">Email<em>*</em></label>
+                                                            <input type="email" class="form-control" id="form-contact-agent-email"  name="email" required>
+                                                        </div><!-- /.form-group -->
+                                                        <div class="form-group">
+                                                             <div class="form-group">
+                                                            <label for="telefono">Telefono<em>*</em></label>
+                                                            <input type="text" class="form-control" id="telefono"  name="telefono" required>
                                                         </div><!-- /.form-group -->
                                                         <div class="form-group">
                                                             <label for="form-contact-agent-message">Your Message<em>*</em></label>
-                                                            <textarea class="form-control" id="form-contact-agent-message" rows="2" name="form-contact-agent-message" required></textarea>
+                                                            <textarea class="form-control" id="form-contact-agent-message" rows="2" name="mensaje" required></textarea>
                                                         </div><!-- /.form-group -->
                                                         <div class="form-group">
-                                                            <button type="submit" class="btn pull-right btn-default" id="form-contact-agent-submit">Send a Message</button>
+                                                            <button type="submit" class="btn pull-right btn-default" href="/Casa/{{casa.id}}" id="form-contact-agent-submit">Enviar Mensaje</button>
                                                         </div><!-- /.form-group -->
                                                         <div id="form-contact-agent-status"></div>
                                                     </form><!-- /#form-contact -->

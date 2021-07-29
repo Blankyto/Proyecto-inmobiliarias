@@ -16,6 +16,42 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/magnific-popup.css') }}" type="text/css">
 
 
+<script>
+
+  function initMap() {
+    var options = {
+      zoom:8,
+      center:{lat:42.3601,lng:-71.0589}
+
+    }
+
+  var map = new
+    google.maps.Map(document.getElementById("map"), options);
+
+  var Marker = new google.maps.Marker({
+    position:{lat:42.3601,lng:-70.0589},
+    map:map,
+    icon:"assets/img/property-types/Casa.png"
+  });
+
+    var infoWindow = new google.maps.InfoWindow({
+    content: '<img  style="width:150px;height:150px" src="assets/img/properties/1.jpg">',
+  });
+    Marker.addListener("click", () => {
+    infoWindow.open({
+      anchor: Marker,
+      map,
+      shouldFocus: false,
+    });
+  });
+google.maps.event.addDomListener(window, 'load', initialize);
+
+  }
+</script>
+
+<script async src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBnnhUm4RC2hszZTC8Wpis8j_iv0qHcZ3w&callback=initMap"></script>
+    <!-- end Map -->
+
 </head>
 
 <body class="page-homepage map-google" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
@@ -221,7 +257,7 @@
 </div>
 
 <script type="text/javascript" src="{{ url_for('static', filename='/js/jquery-2.1.0.min.js') }}"></script>
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
 <script type="text/javascript" src="{{ url_for('static', filename='/bootstrap/js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='/js/jquery-migrate-1.2.1.min.js') }}"></script>
 
@@ -254,12 +290,6 @@
 <!--[if gt IE 8]>
 <script type="text/javascript" src="{{ url_for('static', filename='/js/ie.js') }}"></script>
 <![endif]-->
-<script type="text/javascript">
-    var propertyId = 0;
-    google.maps.event.addDomListener(window, 'load', initMap(propertyId));
-    $(window).load(function(){
-        initializeOwl(false);
-    });
-</script>
+
 </body>
 </html>

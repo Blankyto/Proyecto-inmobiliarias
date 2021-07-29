@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocation</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+<style>
+
+  #map{
+  height:400px;
+width:400px;
+  }
+</style>
+  </head>
+  <body>
+
+<script>
+
+  function initMap() {
+    var options = {
+      zoom:8,
+      center:{lat:42.3601,lng:-71.0589}
+
+    }
+
+  var map = new
+    google.maps.Map(document.getElementById("map"), options);
+
+  var Marker = new google.maps.Marker({
+    position:{lat:42.3601,lng:-70.0589},
+    map:map,
+    icon:"assets/img/property-types/Casa.png"
+  });
+
+    var infoWindow = new google.maps.InfoWindow({
+    content: '<h1> HOLA </h1>',
+  });
+    marker.addListener("click", () => {
+    infoWindow.open({
+      anchor: Marker,
+      map,
+      shouldFocus: false,
+    });
+  });
+
+
+  }
+</script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBnnhUm4RC2hszZTC8Wpis8j_iv0qHcZ3w&callback=initMap"></script>
+    <!-- end Map -->
+
+    </body>
+</html>
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+  function initMap() {
+    var options = {
+      zoom:6,
+      center:{lat:40.377998,lng:-3.752783}
+
+    }
+  function initMap() {
+    var options = {
+      zoom:6,
+      center:{lat:40.377998,lng:-3.752783}
+
+    }
+
+
+{% for i in mapa %}
+
+
+
+
+  var Marker{{i.id}} = new google.maps.Marker({
+    position:{lat:{{i.Lat}},lng:{{i.Lon}}},
+    map:map,
+    icon:"assets/img/property-types/{{i.Tipo}}.png",
+    scaledSize: new google.maps.Size(50, 50)
+  });
+
+
+
+
+    var contentString ='<div>'+'<p>{{i.id}}</p>'+
+                                   '<img  style="width:250px;height:250px" src="assets/img/properties/{{i.Imagen}}">'+
+                                   '<h3>Area: aM<sup>2</sup></h3>'+
+                                   '</div>'+
+                                   '<h2>Dormitorios: a</h2>'+
+                                   '<p>Baños:a</p>'+
+                                   '<p><strong> Price: </strong>€a</p>'+
+                                   '</div>';
+    var infoWindow = new google.maps.InfoWindow({
+    content: (contentString)
+  });
+    Marker{{i.id}}.addListener("click", () => {
+    infoWindow.open({
+      anchor: Marker{{i.id}},
+      map,
+      shouldFocus: false,
+    });
+  });
+{% endfor %}
+google.maps.event.addDomListener(window, 'load', initialize);
+
+  }
+
+
+    var icon = {
+    url: "assets/img/property-types/"+locations[i][4]+".png",
+    scaledSize: new google.maps.Size(32, 32), // scaled size
+    origin: new google.maps.Point(0,0), // origin
+    anchor: new google.maps.Point(0, 0) // anchor
+    };
+
+      var Imagen = "assets/img/properties/"+locations[i][5];
+        var contentString ='<div>'+'<p>'+locations[i][0]+'</p>'+
+                                   '<img  style="width:250px;height:250px" src='+Imagen+'>'+
+                                   '<h3>Area: aM<sup>2</sup></h3>'+
+                                   '</div>'+
+                                   '<h2>Dormitorios: a</h2>'+
+                                   '<p>Baños:a</p>'+
+                                   '<p><strong> Price: </strong>€a</p>'+
+                                   '</div>';
