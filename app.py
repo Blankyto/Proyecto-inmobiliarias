@@ -1,6 +1,5 @@
 import os
 
-from flask_googlemaps import GoogleMaps, Map
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask import session as sess
@@ -10,8 +9,7 @@ import datetime
 from werkzeug.utils import secure_filename
 
 STATIC_FOLDER = 'templates/assets'
-app = Flask(__name__,
-            static_folder=STATIC_FOLDER)
+app = Flask(__name__, static_folder=STATIC_FOLDER)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///databases/realstate.db"
 db = SQLAlchemy(app)
 session = db.session
@@ -112,7 +110,7 @@ def mapview():
 
 @app.route('/', methods=["GET", "POST"])
 def index():
-    if request.method =="GET":
+    if request.method == "GET":
         c = db.session.query(Casas).order_by(Casas.id.desc()).limit(2)
         busqueda = session.query(Casas).all()
         row = session.query(Casas).count()
@@ -121,7 +119,6 @@ def index():
         b = []
         u = []
         e = []
-
 
         for i in busqueda:
             if i.Tipo not in t:
@@ -148,7 +145,8 @@ def index():
         ubicacion = request.form.get("ubicacion")
         busqueda2 = db.session.query(Casas).filter(
             and_(Casas.Estado.ilike("%" + estado + "%"), Casas.Dormitorio.ilike("%" + dormitorio + "%"),
-                 Casas.Tipo.ilike("%" + tipo + "%"), Casas.Banios.ilike("%" + banio + "%"), Casas.Ubicacion.ilike("%"+ubicacion+"%"))).all()
+                 Casas.Tipo.ilike("%" + tipo + "%"), Casas.Banios.ilike("%" + banio + "%"),
+                 Casas.Ubicacion.ilike("%" + ubicacion + "%"))).all()
 
         t = []
         d = []
@@ -169,6 +167,7 @@ def index():
                 e.append(i.Estado)
         return render_template('Index.html', mapa=busqueda2, rowmapa=row, lista2=busqueda, c=c, tf=t, dor=d, ban=b,
                                est=e, ub=u)
+
 
 @app.route("/lista", methods=["GET", "POST"])
 def lista():
@@ -209,7 +208,8 @@ def lista():
         ubicacion = request.form.get("ubicacion")
         busqueda2 = db.session.query(Casas).filter(
             and_(Casas.Estado.ilike("%" + estado + "%"), Casas.Dormitorio.ilike("%" + dormitorio + "%"),
-                 Casas.Tipo.ilike("%" + tipo + "%"), Casas.Banios.ilike("%" + banio + "%"), Casas.Ubicacion.ilike("%"+ubicacion+"%")))
+                 Casas.Tipo.ilike("%" + tipo + "%"), Casas.Banios.ilike("%" + banio + "%"),
+                 Casas.Ubicacion.ilike("%" + ubicacion + "%")))
         ROWS_PER_PAGE = 20
         page = request.args.get('page', 1, type=int)
         rows = busqueda2.count()
@@ -260,13 +260,13 @@ def upload():
                     imagen = db.session.query(Casas).filter(Casas.id == estado).one()
 
                     imagen.Imagen = filename
-                    print(imagen.Imagen)
+
                     db.session.commit()
                 db.session.add(imagenes)
                 db.session.commit()
 
         flash('Fotos cargadas')
-    return render_template("/upload.html", casa=casa, c=c)
+    return redirect(request.referrer, casa=casa, c=c)
 
 
 @app.route("/cargar", methods=["POST", "GET"])
@@ -287,14 +287,15 @@ def cargar():
             area = request.form.get("area")
             garage = request.form.get("garages")
             foto = request.files.getlist('files[]')
-
+            latitud = request.form.get("latitud")
+            longitud = request.form.get("longitud")
             for file in foto:
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 casa = Casas(Casa=titulo, Vendedor=" ", Area=area, Dormitorio=dorm, Banios=banios, Precio=precio,
                              Estado=estado, Tipo=tipo, DescripcionR=descripcionr, Ubicacion=ubic,
                              DescripcionC=descripcionc,
-                             Imagen=filename)
+                             Imagen=filename, Lat=latitud, Lon=longitud)
                 db.session.add(casa)
                 db.session.commit()
 
@@ -306,27 +307,49 @@ def cargar():
 
 @app.route("/Casa/<id>", methods=["POST", "GET"])
 def Casa(id):
-    if request.method == "POST":
-        Nombre = request.form.get("nombre")
-        Email = request.form.get("email")
-        Telefono = request.form.get("telefono")
-        Mensaje = request.form.get("mensaje")
-        mensaje2 = Contacto(Nombre=Nombre, Email=Email, Telefono=Telefono, Mensaje=Mensaje, Casa=id)
-        print(mensaje2)
-        db.session.add(mensaje2)
-        db.session.commit()
-        busqueda = db.session.query(Casas).filter_by(id=int(id)).one()
+    c = db.session.query(Casas).order_by(Casas.id.desc()).limit(2)
+    if 'loggedin' in sess:
+        if request.method == "POST":
+            Nombre = request.form.get("nombre")
+            Email = request.form.get("email")
+            Telefono = request.form.get("telefono")
+            Mensaje = request.form.get("mensaje")
+            mensaje2 = Contacto(Nombre=Nombre, Email=Email, Telefono=Telefono, Mensaje=Mensaje, Casa=id)
+            print(mensaje2)
+            db.session.add(mensaje2)
+            db.session.commit()
+            busqueda = db.session.query(Casas).filter_by(id=int(id)).one()
 
-        fotos = db.session.query(Imagenes).filter(Imagenes.casa == id).all()
-        carac = db.session.query(Caract).filter(Caract.Casa == id).all()
-        return render_template("Casa.html", casa=busqueda, fotos=fotos, carac=carac)
+            fotos = db.session.query(Imagenes).filter(Imagenes.casa == id).all()
+            carac = db.session.query(Caract).filter(Caract.Casa == id).all()
+            return render_template("CasaA.html", c=c, casa=busqueda, fotos=fotos, carac=carac)
+        else:
+            busqueda = db.session.query(Casas).filter_by(id=int(id)).one()
+
+            fotos = db.session.query(Imagenes).filter(Imagenes.casa == id).all()
+            carac = db.session.query(Caract).filter(Caract.Casa == id).all()
+            return render_template("CasaA.html", c=c, casa=busqueda, fotos=fotos, carac=carac)
     else:
-        busqueda = db.session.query(Casas).filter_by(id=int(id)).one()
+        if request.method == "POST":
+            Nombre = request.form.get("nombre")
+            Email = request.form.get("email")
+            Telefono = request.form.get("telefono")
+            Mensaje = request.form.get("mensaje")
+            mensaje2 = Contacto(Nombre=Nombre, Email=Email, Telefono=Telefono, Mensaje=Mensaje, Casa=id)
+            print(mensaje2)
+            db.session.add(mensaje2)
+            db.session.commit()
+            busqueda = db.session.query(Casas).filter_by(id=int(id)).one()
 
-        fotos = db.session.query(Imagenes).filter(Imagenes.casa == id).all()
-        carac = db.session.query(Caract).filter(Caract.Casa == id).all()
-        return render_template("Casa.html", casa=busqueda, fotos=fotos, carac=carac)
+            fotos = db.session.query(Imagenes).filter(Imagenes.casa == id).all()
+            carac = db.session.query(Caract).filter(Caract.Casa == id).all()
+            return render_template("Casa.html", c=c, casa=busqueda, fotos=fotos, carac=carac)
+        else:
+            busqueda = db.session.query(Casas).filter_by(id=int(id)).one()
 
+            fotos = db.session.query(Imagenes).filter(Imagenes.casa == id).all()
+            carac = db.session.query(Caract).filter(Caract.Casa == id).all()
+            return render_template("Casa.html", c=c, casa=busqueda, fotos=fotos, carac=carac)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -358,6 +381,13 @@ def login():
     msg = 'Incorrect username/password!'
     return render_template("login.html", msg=msg)
 
+@app.route('/logout')
+def logout():
+    sess.pop('loggedin', None)
+    sess.pop('id', None)
+    sess.pop('username', None)
+
+    return redirect(url_for('index'))
 
 @app.route("/caracteristicas", methods=["POST", "GET"])
 def caracteristicas():
@@ -366,7 +396,7 @@ def caracteristicas():
         casa = db.session.query(Casas).all()
         if request.method == "GET":
 
-            return render_template("/caracteristicas.html", c=c, casa=casa)
+            return redirect(request.referrer, c=c, casa=casa)
 
 
         else:
@@ -381,7 +411,7 @@ def caracteristicas():
                 carac = Caract(Casa=casa, Caracteristicas=i)
                 db.session.add(carac)
                 db.session.commit()
-            return render_template("/caracteristicas.html", c=c, casa=casa)
+            return redirect(request.referrer)
 
 
 @app.route("/modificar", methods=["GET", "POST"])
@@ -447,9 +477,9 @@ def eliminar(id):
         if request.method == "GET":
             casa = db.session.query(Casas).filter(Casas.id == int(id)).delete()
             db.session.commit()
-            return redirect(url_for("modificar"))
+            return redirect(request.referrer)
         else:
-            return redirect(url_for("modificar"))
+            return redirect(request.referrer)
 
 
 @app.route("/eliminarC/<id>", methods=["GET", "POST"])
@@ -458,9 +488,9 @@ def eliminarC(id):
         if request.method == "GET":
             carac = db.session.query(Caract).filter(Caract.id == int(id)).delete()
             db.session.commit()
-            return redirect(url_for("modificarC"))
+            return redirect(request.referrer)
         else:
-            return redirect(url_for("modificarC"))
+            return redirect(request.referrer)
 
 
 @app.route("/eliminarI/<id>", methods=["GET", "POST"])
@@ -469,9 +499,9 @@ def eliminarI(id):
         if request.method == "GET":
             Fotos = db.session.query(Imagenes).filter(Imagenes.id == int(id)).delete()
             db.session.commit()
-            return redirect(url_for("modificarI"))
+            return redirect(request.referrer)
         else:
-            return redirect(url_for("modificarI"))
+            return redirect(request.referrer)
 
 
 if __name__ == "__main__":

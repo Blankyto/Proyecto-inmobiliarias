@@ -1,16 +1,88 @@
 {% extends 'base.html' %}
 
 {% block main %}
+<style>
+.container3 {
+  position: center;
+  width: 100%;
+
+}
+
+.container3 img {
+  width: 100%;
+  height: auto;
+}
+
+.container3 .btn {
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.container3 .btn:hover {
+  background-color: black;
+}
+.container2 {
+  position: center;
+  width: 100%;
+
+}
+
+.container2 img {
+  width: 100%;
+  height: auto;
+}
+
+.container2 .btn {
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.container2 .btn:hover {
+  background-color: black;
+}
+</style>
                         <section id="property-gallery">
                             <div class="w3-content w3-display-container">
-                                  <img class="mySlides" src="/assets/img/properties/{{casa.Imagen}}" style="width:100%; height=100%">
+                                <div class="container3">
+                                  <img class="mySlides" src="/assets/img/properties/{{casa.Imagen}}" style="width:100%; height=auto">
+
+
+                                    </div>
                                     {% for i in fotos %}
-                                    <img class="mySlides" src="/assets/img/properties/{{i.archivo}}" style="width:100%; height=100%">
+                                <a onclick="return confirm('Confirma que desea eliminar la imagen numero {{i.id}}');" href="/eliminarI/{{i.id}}">
+                                <div class="container3">
+                                    <img  class="mySlides" src="/assets/img/properties/{{i.archivo}}" style="width:100%; height=auto">
+
+
+                                    </div> </a>
                                 {% endfor %}
 
                                   <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
                                   <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
                                 </div>
+
 <script>
 var slideIndex = 1;
 showDivs(slideIndex);
@@ -30,7 +102,32 @@ function showDivs(n) {
   x[slideIndex-1].style.display = "block";
 }
 </script>
+                            <table align="center">
+   <form method="post" action="/upload" enctype="multipart/form-data" class="form-inline">
+    <div class="form-group">
+                 <th>   <label>Cargar imagenes: </label></th>
+                  <tr> <td>   <input type="file" name="files[]" id="fileInput" class="form-control" multiple ></td>
+                                        <div class="form-group">
+                                <td>    <select name="estado">
 
+
+                                        <option value="{{casa.id}}">{{casa.id}}</option>
+
+
+                                    </select></td>
+                                </div>
+                            <td> <div class="form-group">
+                                    <select name="primaria">
+                                        <option value="False">Primaria</option>
+
+                                        <option value="True">Si</option>
+                                        <option value="False">No</option>
+
+                                    </select>
+                                </div></td>
+                 </div>
+                <td> <input type="submit" name="submit" onclick="return confirm('Esta seguro que subira esas imagenes?');" class="btn btn-success" value="UPLOAD"/></td></tr>
+             </form></table>
 
                         </section>
     <div id="page-content">
@@ -94,10 +191,28 @@ function showDivs(n) {
                                     <header><h2>Caracteristicas</h2></header>
                                     <ul class="list-unstyled property-features-list">
                                         {% for i in carac %}
-                                        <li>{{i.Caracteristicas}}</li>
+                                        <li>{{i.Caracteristicas}}  <a onclick="return confirm('Seguro desea elminar {{i.Caracteristicas}}?');" href="/eliminarC/{{i.id}}">ELIMINAR</a></li>
+
                                         {% endfor %}
 
                                     </ul>
+<form method="post" action="/caracteristicas" enctype="multipart/form-data" class="form-inline">
+<div class="form-group">
+                      <label>Escriba las caracteristicas: </label>
+                      <textarea class="form-control" id="submit-description" rows="4" name="carac" required></textarea>
+                                        <div class="form-group">
+                                    <select name="estado">
+                                        <option value="{{casa.id}}">{{casa.id}}</option>
+
+
+
+
+                                    </select>
+                                </div>
+
+                 </div>
+                 <input type="submit" name="submit" class="btn btn-success" value="UPLOAD"/>
+             </form>
                                 </section><!-- /#property-features -->
                                 
 
@@ -116,7 +231,7 @@ function showDivs(n) {
                                         </figure>
                                     </div>
                                     <div class="rating-form">
-                                        <header>Thank you! Please describe your rating</header>
+                                        <header>Gracias Por valorar la propiedad.</header>
                                         <form role="form" id="form-rating"  method="post"  class="clearfix">
                                             <div class="row">
                                                 <div class="col-md-6">
